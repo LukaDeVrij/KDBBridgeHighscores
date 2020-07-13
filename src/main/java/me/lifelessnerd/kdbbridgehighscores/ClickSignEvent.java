@@ -49,6 +49,7 @@ public class ClickSignEvent implements Listener
                             final Score entryScore = objective.getScore(entryName);
                             final int entryIntScore = entryScore.getScore();
                             scoresMap.put(entryIntScore, entryName);
+                            player.sendMessage("key " + entryIntScore + " with value " + entryName + " was added");
                         }
 
                         for (final int entryIntScore2 : scoresMap.keySet()) {
