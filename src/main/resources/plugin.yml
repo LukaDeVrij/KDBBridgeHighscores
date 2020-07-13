@@ -1,0 +1,6 @@
+name: KDBBridgeHighScores
+version: ${project.version}
+main: me.lifelessnerd.kdbbridgehighscores.KDBBridgeHighScores
+authors: [LifelessNerd]
+description: High scores on sign or when clicked on sign
+website: httpsL://bit.ly/KDBSite
