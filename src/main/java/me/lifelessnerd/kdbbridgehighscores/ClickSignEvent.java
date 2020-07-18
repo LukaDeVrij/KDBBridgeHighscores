@@ -6,13 +6,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.ArmorStand;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Entity;
 import org.bukkit.Location;
@@ -28,20 +26,17 @@ public class ClickSignEvent implements Listener
     @EventHandler
     public void onPlayerClickSign(final PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        final String playerName = event.getPlayer().getName();
         if (player.getWorld().getName().equalsIgnoreCase("kbevent")) {
 
-            if (event.getClickedBlock().getType() != null) {
-
+            if (event.getClickedBlock().getType() != null)
                 if ((event.getClickedBlock().getType() == Material.SIGN || event.getClickedBlock().getType() == Material.SIGN_POST || event.getClickedBlock().getType() == Material.WALL_SIGN) && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    final Sign sign = (Sign)event.getClickedBlock().getState();
+                    final Sign sign = (Sign) event.getClickedBlock().getState();
 
                     if (sign.getLine(1).equalsIgnoreCase("Highscores")) {
                         final Scoreboard scoreboard = player.getScoreboard();
                         final Objective objective = scoreboard.getObjective("KBwins");
-                        final Score kitScore = objective.getScore(playerName);
-                        final Set<String> entries = (Set<String>)scoreboard.getEntries();
-                        final ConcurrentHashMap<Integer, String> scoresMap = new ConcurrentHashMap<Integer, String>();
+                        final Set<String> entries = scoreboard.getEntries();
+                        final ConcurrentHashMap<Integer, String> scoresMap = new ConcurrentHashMap<>();
                         int highestScore = 0;
 
                         for (final String entryName : entries) {
@@ -62,22 +57,22 @@ public class ClickSignEvent implements Listener
                         final Location firstName = new Location(Bukkit.getWorld("kbevent"), 26.5, 102.0, 0.5);
                         final Location firstScore = new Location(Bukkit.getWorld("kbevent"), 26.5, 101.75, 0.5);
                         final Location locDate = new Location(Bukkit.getWorld("kbevent"), 26.5, 100.0, 3.0);
-                        final Location secondName = new Location(Bukkit.getWorld("kbevent"), 26.5 , 101.25 , 0.5);
-                        final Location secondScore = new Location(Bukkit.getWorld("kbevent"), 26.5 , 101.0 , 0.5);
-                        final Location thirdName = new Location(Bukkit.getWorld("kbevent"), 26.5 , 100.5 , 0.5);
-                        final Location thirdScore = new Location(Bukkit.getWorld("kbevent"), 26.5 , 100.25 , 0.5);
+                        final Location secondName = new Location(Bukkit.getWorld("kbevent"), 26.5, 101.25, 0.5);
+                        final Location secondScore = new Location(Bukkit.getWorld("kbevent"), 26.5, 101.0, 0.5);
+                        final Location thirdName = new Location(Bukkit.getWorld("kbevent"), 26.5, 100.5, 0.5);
+                        final Location thirdScore = new Location(Bukkit.getWorld("kbevent"), 26.5, 100.25, 0.5);
 
-                        final List<Entity> existingEntities = (List<Entity>)player.getLocation().getWorld().getEntities();
+                        final List<Entity> existingEntities = player.getLocation().getWorld().getEntities();
 
                         for (final Entity entity : existingEntities) {
                             if (entity.getType().equals(EntityType.ARMOR_STAND) &&
                                     (entity.getLocation().equals(firstName) |
-                                    entity.getLocation().equals(firstScore) |
-                                    entity.getLocation().equals(locDate) |
-                                    entity.getLocation().equals(secondName) |
-                                    entity.getLocation().equals(secondScore) |
-                                    entity.getLocation().equals(thirdName) |
-                                    entity.getLocation().equals(thirdScore))) {
+                                            entity.getLocation().equals(firstScore) |
+                                            entity.getLocation().equals(locDate) |
+                                            entity.getLocation().equals(secondName) |
+                                            entity.getLocation().equals(secondScore) |
+                                            entity.getLocation().equals(thirdName) |
+                                            entity.getLocation().equals(thirdScore))) {
 
                                 entity.remove();
                             }
@@ -140,9 +135,6 @@ public class ClickSignEvent implements Listener
                         holoThirdScore.setGravity(false);
 
 
-
-
-
                         // date thingy
                         LocalDateTime myDateObj = LocalDateTime.now();
                         System.out.println("Before formatting: " + myDateObj);
@@ -159,12 +151,9 @@ public class ClickSignEvent implements Listener
                         //
 
 
-
-
                         sign.update();
                     }
                 }
-            }
         }
     }
 }
