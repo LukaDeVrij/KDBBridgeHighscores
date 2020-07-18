@@ -59,45 +59,87 @@ public class ClickSignEvent implements Listener
                             }
                         }
                         final String highestScorePlayer = scoresMap.get(highestScore);
-                        final Location loc = new Location(Bukkit.getWorld("kbevent"), 26.5, 102.0, 0.5);
-                        final Location locln2 = new Location(Bukkit.getWorld("kbevent"), 26.5, 101.75, 0.5);
+                        final Location firstName = new Location(Bukkit.getWorld("kbevent"), 26.5, 102.0, 0.5);
+                        final Location firstScore = new Location(Bukkit.getWorld("kbevent"), 26.5, 101.75, 0.5);
                         final Location locDate = new Location(Bukkit.getWorld("kbevent"), 26.5, 100.0, 3.0);
+                        final Location secondName = new Location(Bukkit.getWorld("kbevent"), 26.5 , 101.25 , 0.5);
+                        final Location secondScore = new Location(Bukkit.getWorld("kbevent"), 26.5 , 101.0 , 0.5);
+                        final Location thirdName = new Location(Bukkit.getWorld("kbevent"), 26.5 , 100.5 , 0.5);
+                        final Location thirdScore = new Location(Bukkit.getWorld("kbevent"), 26.5 , 100.25 , 0.5);
+
                         final List<Entity> existingEntities = (List<Entity>)player.getLocation().getWorld().getEntities();
 
                         for (final Entity entity : existingEntities) {
-                            if (entity.getType().equals((Object)EntityType.ARMOR_STAND) && (entity.getLocation().equals((Object)loc) | entity.getLocation().equals((Object)locln2)) | entity.getLocation().equals(locDate)) {
+                            if (entity.getType().equals(EntityType.ARMOR_STAND) &&
+                                    (entity.getLocation().equals(firstName) |
+                                    entity.getLocation().equals(firstScore) |
+                                    entity.getLocation().equals(locDate) |
+                                    entity.getLocation().equals(secondName) |
+                                    entity.getLocation().equals(secondScore) |
+                                    entity.getLocation().equals(thirdName) |
+                                    entity.getLocation().equals(thirdScore))) {
 
                                 entity.remove();
                             }
                         }
-                        final ArmorStand hologram = (ArmorStand) player.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
-                        hologram.setVisible(false);
-                        hologram.setCustomName("§b" + highestScorePlayer);
-                        hologram.setCustomNameVisible(true);
-                        hologram.setGravity(false);
-                        final ArmorStand hologramln2 = (ArmorStand) player.getWorld().spawnEntity(locln2, EntityType.ARMOR_STAND);
-                        hologramln2.setVisible(false);
-                        hologramln2.setCustomName(String.valueOf(highestScore));
-                        hologramln2.setCustomNameVisible(true);
-                        hologramln2.setGravity(false);
-                        player.sendMessage("§aScores zijn ververst.");
+                        final ArmorStand holoFirstName = (ArmorStand) player.getWorld().spawnEntity(firstName, EntityType.ARMOR_STAND);
+                        holoFirstName.setVisible(false);
+                        holoFirstName.setCustomName("§b" + highestScorePlayer);
+                        holoFirstName.setCustomNameVisible(true);
+                        holoFirstName.setGravity(false);
+                        final ArmorStand holoFirstScore = (ArmorStand) player.getWorld().spawnEntity(firstScore, EntityType.ARMOR_STAND);
+                        holoFirstScore.setVisible(false);
+                        holoFirstScore.setCustomName(String.valueOf(highestScore));
+                        holoFirstScore.setCustomNameVisible(true);
+                        holoFirstScore.setGravity(false);
+                        player.sendMessage("[§6KDB§r] §aScores zijn ververst.");
                         System.out.println("Scores were updated in kbevent");
 
                         // getting the second best player
-                        player.sendMessage(scoresMap.toString());
                         scoresMap.remove(highestScore);
-                        player.sendMessage(highestScore + " deleted");
                         highestScore = 0;
-                        player.sendMessage(scoresMap.toString());
                         for (final int entryIntScoreFE : scoresMap.keySet()) {
                             if (entryIntScoreFE >= highestScore) {
                                 highestScore = entryIntScoreFE;
-
                             }
                         }
-                        player.sendMessage("Second best is " + highestScore + " by " + scoresMap.get(highestScore));
+
                         // tweede plek nu goede gecalibreerd
                         // nieuwe hologram voor tweede plek hieronder
+                        final ArmorStand holoSecondName = (ArmorStand) player.getWorld().spawnEntity(secondName, EntityType.ARMOR_STAND);
+                        holoSecondName.setVisible(false);
+                        holoSecondName.setCustomName("§b" + scoresMap.get(highestScore));
+                        holoSecondName.setCustomNameVisible(true);
+                        holoSecondName.setGravity(false);
+
+                        final ArmorStand holoSecondScore = (ArmorStand) player.getWorld().spawnEntity(secondScore, EntityType.ARMOR_STAND);
+                        holoSecondScore.setVisible(false);
+                        holoSecondScore.setCustomName(String.valueOf(highestScore));
+                        holoSecondScore.setCustomNameVisible(true);
+                        holoSecondScore.setGravity(false);
+
+                        // getting the third best player
+                        scoresMap.remove(highestScore);
+                        highestScore = 0;
+                        for (final int entryIntScoreFE : scoresMap.keySet()) {
+                            if (entryIntScoreFE >= highestScore) {
+                                highestScore = entryIntScoreFE;
+                            }
+                        }
+                        //derde plek gecalibreerd
+                        final ArmorStand holoThirdName = (ArmorStand) player.getWorld().spawnEntity(thirdName, EntityType.ARMOR_STAND);
+                        holoThirdName.setVisible(false);
+                        holoThirdName.setCustomName("§b" + scoresMap.get(highestScore));
+                        holoThirdName.setCustomNameVisible(true);
+                        holoThirdName.setGravity(false);
+
+                        final ArmorStand holoThirdScore = (ArmorStand) player.getWorld().spawnEntity(thirdScore, EntityType.ARMOR_STAND);
+                        holoThirdScore.setVisible(false);
+                        holoThirdScore.setCustomName(String.valueOf(highestScore));
+                        holoThirdScore.setCustomNameVisible(true);
+                        holoThirdScore.setGravity(false);
+
+
 
 
 
@@ -114,6 +156,7 @@ public class ClickSignEvent implements Listener
                         hologramDate.setCustomName(formattedDate);
                         hologramDate.setCustomNameVisible(true);
                         hologramDate.setGravity(false);
+                        //
 
 
 
