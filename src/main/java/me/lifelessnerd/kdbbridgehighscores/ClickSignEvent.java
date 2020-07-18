@@ -4,9 +4,9 @@ import org.bukkit.event.EventHandler;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -17,7 +17,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Entity;
 import org.bukkit.Location;
 import org.bukkit.Bukkit;
-import java.util.HashMap;
 import org.bukkit.block.Sign;
 import org.bukkit.event.block.Action;
 import org.bukkit.Material;
@@ -42,19 +41,21 @@ public class ClickSignEvent implements Listener
                         final Objective objective = scoreboard.getObjective("KBwins");
                         final Score kitScore = objective.getScore(playerName);
                         final Set<String> entries = (Set<String>)scoreboard.getEntries();
-                        final HashMap<Integer, String> scoresMap = new HashMap<Integer, String>();
+                        final ConcurrentHashMap<Integer, String> scoresMap = new ConcurrentHashMap<Integer, String>();
                         int highestScore = 0;
 
                         for (final String entryName : entries) {
                             final Score entryScore = objective.getScore(entryName);
                             final int entryIntScore = entryScore.getScore();
                             scoresMap.put(entryIntScore, entryName);
-                            player.sendMessage("key " + entryIntScore + " with value " + entryName + " was added");
                         }
+                        // scoresMap created and filled
 
-                        for (final int entryIntScore2 : scoresMap.keySet()) {
-                            if (entryIntScore2 >= highestScore) {
-                                highestScore = entryIntScore2;
+                        //getting best player based on highest key
+                        for (final int entryIntScoreFE : scoresMap.keySet()) {
+                            if (entryIntScoreFE >= highestScore) {
+                                highestScore = entryIntScoreFE;
+
                             }
                         }
                         final String highestScorePlayer = scoresMap.get(highestScore);
@@ -82,6 +83,25 @@ public class ClickSignEvent implements Listener
                         player.sendMessage("§aScores zijn ververst.");
                         System.out.println("Scores were updated in kbevent");
 
+                        // getting the second best player
+                        player.sendMessage(scoresMap.toString());
+                        scoresMap.remove(highestScore);
+                        player.sendMessage(highestScore + " deleted");
+                        highestScore = 0;
+                        player.sendMessage(scoresMap.toString());
+                        for (final int entryIntScoreFE : scoresMap.keySet()) {
+                            if (entryIntScoreFE >= highestScore) {
+                                highestScore = entryIntScoreFE;
+
+                            }
+                        }
+                        player.sendMessage("Second best is " + highestScore + " by " + scoresMap.get(highestScore));
+                        // tweede plek nu goede gecalibreerd
+                        // nieuwe hologram voor tweede plek hieronder
+
+
+
+                        // date thingy
                         LocalDateTime myDateObj = LocalDateTime.now();
                         System.out.println("Before formatting: " + myDateObj);
                         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd MMM HH:mm:ss");
