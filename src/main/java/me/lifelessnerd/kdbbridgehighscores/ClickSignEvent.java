@@ -32,6 +32,7 @@ public class ClickSignEvent implements Listener
                 if ((event.getClickedBlock().getType() == Material.SIGN || event.getClickedBlock().getType() == Material.SIGN_POST || event.getClickedBlock().getType() == Material.WALL_SIGN) && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                     final Sign sign = (Sign) event.getClickedBlock().getState();
 
+
                     if (sign.getLine(1).equalsIgnoreCase("Highscores")) {
                         final Scoreboard scoreboard = player.getScoreboard();
                         final Objective objective = scoreboard.getObjective("KBwins");
