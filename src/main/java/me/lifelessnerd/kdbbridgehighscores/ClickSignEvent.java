@@ -42,14 +42,14 @@ public class ClickSignEvent implements Listener
 
                         for (final String entryName : entries) {
                             final Score entryScore = objective.getScore(entryName);
-                            final int entryIntScore = entryScore.getScore();
+                            int entryIntScore = entryScore.getScore();
                             scoresMap.put(entryIntScore, entryName);
                         }
                         // scoresMap created and filled
 
                         //getting best player based on highest key
                         for (final int entryIntScoreFE : scoresMap.keySet()) {
-                            if (entryIntScoreFE >= highestScore) {
+                            if (entryIntScoreFE > highestScore) {
                                 highestScore = entryIntScoreFE;
 
                             }
@@ -95,7 +95,7 @@ public class ClickSignEvent implements Listener
                         scoresMap.remove(highestScore);
                         highestScore = 0;
                         for (final int entryIntScoreFE : scoresMap.keySet()) {
-                            if (entryIntScoreFE >= highestScore) {
+                            if (entryIntScoreFE > highestScore) {
                                 highestScore = entryIntScoreFE;
                             }
                         }
@@ -118,7 +118,7 @@ public class ClickSignEvent implements Listener
                         scoresMap.remove(highestScore);
                         highestScore = 0;
                         for (final int entryIntScoreFE : scoresMap.keySet()) {
-                            if (entryIntScoreFE >= highestScore) {
+                            if (entryIntScoreFE > highestScore) {
                                 highestScore = entryIntScoreFE;
                             }
                         }
@@ -138,11 +138,10 @@ public class ClickSignEvent implements Listener
 
                         // date thingy
                         LocalDateTime myDateObj = LocalDateTime.now();
-                        System.out.println("Before formatting: " + myDateObj);
                         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd MMM HH:mm:ss");
 
                         String formattedDate = myDateObj.format(myFormatObj);
-                        System.out.println("After formatting: " + formattedDate);
+                        System.out.println("Update time: " + formattedDate);
 
                         final ArmorStand hologramDate = (ArmorStand) player.getWorld().spawnEntity(locDate, EntityType.ARMOR_STAND);
                         hologramDate.setVisible(false);
